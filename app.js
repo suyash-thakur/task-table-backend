@@ -26,5 +26,11 @@ app.use(
     swaggerUi.setup(swaggerDocument)
 );
 app.use('/', statusEndpoints);
-
+app.use(function (err, req, res, next) {
+    res.status(500);
+    if (err.type == 'custom') {
+        return res.send(err.message)
+    }
+    res.send("Server Error");
+ });
 module.exports = app;
